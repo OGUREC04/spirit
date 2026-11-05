@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>System Canvas — acmenra-data</title>
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1920px; height: 1080px; background: #fff; color: #1d2433;
+         font-family: "Segoe UI", Arial, sans-serif; padding: 28px 36px 24px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  h1 { font-size: 30px; font-weight: 600; letter-spacing: .3px; }
+  h1 .br { color: #e8622c; font-weight: 400; }
+  .meta { font-size: 16px; color: #5a6478; text-align: right; line-height: 1.35; }
+  .grid { display: grid; height: 952px; gap: 0;
+          grid-template-columns: repeat(6, 1fr); grid-template-rows: 1fr 1.25fr 1fr;
+          border: 2px solid #8fb3dc; }
+  .z { border: 1px solid #8fb3dc; padding: 12px 16px; overflow: hidden; }
+  .z h2 { font-size: 19px; color: #2a6cc0; font-weight: 600; margin-bottom: 6px; }
+  .z ul { list-style: none; }
+  .z li { font-size: 19px; line-height: 1.34; padding-left: 14px; position: relative; margin-bottom: 3px; }
+  .z li::before { content: "•"; position: absolute; left: 0; color: #2a6cc0; }
+  .en  { grid-column: 1 / 4; grid-row: 1; }
+  .pos { grid-column: 4 / 7; grid-row: 1; }
+  .in  { grid-column: 1 / 3; grid-row: 2; }
+  .uvp { grid-column: 3 / 5; grid-row: 2; background: #e3ebf6; border: 2px solid #6f9bd1; }
+  .pl  { grid-column: 5 / 7; grid-row: 2; }
+  .sh  { grid-column: 1 / 4; grid-row: 3; }
+  .neg { grid-column: 4 / 7; grid-row: 3; }
+  .pos h2, .pl h2, .neg h2 { text-align: right; }
+  .uvp h2 { text-align: center; }
+  .uvp p { font-size: 20.5px; line-height: 1.42; text-align: center; }
+  .uvp b { color: #c0392b; font-weight: 600; }
+  .uvp .why { font-size: 16px; color: #3d4a60; margin-top: 10px; line-height: 1.35; }
+  .tag { font-size: 12.5px; color: #8a93a6; font-style: italic; }
+  .est { font-style: italic; color: #b06a00; }
+  .cols { columns: 2; column-gap: 22px; }
+  .cols li { break-inside: avoid; }
+  .act { color: #1f7a45; }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="br">[</span> SYSTEM CANVAS: acmenra-data — веб-сервис разметки для Acmenra.Studio <span class="br">]</span></h1>
+  <div class="meta">Команда spirit · ДЗ #3<br><span class="est">курсив</span> — оценка, уточняется у Acmenra</div>
+</header>
+<div class="grid">
+
+  <section class="z en">
+    <h2>Enablers</h2>
+    <ul class="cols">
+      <li>Заказчики требуют российское ПО; Acmenra регистрирует свои продукты в реестре</li>
+      <li>Стек задан Acmenra: FastAPI, библиотеки acmenra-cv 0.3.3.1 и acmenra-ds 0.2.0.2</li>
+      <li>Формат выгрузки согласуем с Acmenra: повёрнутая рамка у них 6 чисел, у Ultralytics 9</li>
+      <li>Ограничение прототипа: одна машина, без входа и ролей</li>
+      <li>Неустойчиво: acmenra-ds ранняя (0.2), формат может смениться; релиз продукта заявлен на Q4 2026</li>
+    </ul>
+  </section>
+
+  <section class="z pos">
+    <h2>Positive by-products</h2>
+    <ul class="cols">
+      <li><b>Технические:</b> найдено и передано Acmenra 4 дефекта acmenra-ds — кириллица в путях, папка val, формат OBB, Enum классов</li>
+      <li>Тест выгрузки проверяет совместимость с acmenra-ds при каждом изменении</li>
+      <li><b>Рыночные:</b> шаг к позиции «Ultralytics и Roboflow в одном» для российского рынка</li>
+      <li><b>Goodwill:</b> связь команды УрФУ с Acmenra</li>
+      <li><b>Люди:</b> команда освоила форматы YOLO, FastAPI, разметку</li>
+      <li><b>Кому знать:</b> команде Acmenra (дефекты), преподавателю курса</li>
+    </ul>
+  </section>
+
+  <section class="z in">
+    <h2>Inputs</h2>
+    <ul>
+      <li>Картинки заказчиков (jpg, png, bmp); объём на датасет — <span class="est">оценка, уточнить</span></li>
+      <li>Список классов от ML-инженера, один вид разметки на проект</li>
+      <li>Время разметчика: рамка — 1 протяжка, повёрнутая — 3 клика, полигон — клик на точку</li>
+      <li>Имена файлов латиницей: cv2.imread на Windows не читает кириллицу</li>
+      <li>Форматы и исходники acmenra-ds, документация Ultralytics</li>
+    </ul>
+  </section>
+
+  <section class="z uvp">
+    <h2>Unique Value Proposition</h2>
+    <p>Мы помогаем <b>разметчикам и ML-инженерам Acmenra</b>,
+      в ситуации, <b>когда под заказ нужен обучающий датасет, а заказчик требует российское ПО</b>,
+      решать проблему <b>разметки без зарубежных сервисов и ручной пересборки их выгрузки</b>,
+      с помощью <b>веб-сервиса acmenra-data: рамка, полигон, повёрнутая рамка, zip в формате YOLO</b>,
+      и получать <b>датасет, который acmenra-ds открывает сразу, без конвертера</b></p>
+    <p class="why">Ultralytics Platform отдаёт один .ndjson со ссылками на картинки, живущими 7 дней, — папки YOLO собирают кодом. У нас zip с папками, проверено тестом.</p>
+  </section>
+
+  <section class="z pl">
+    <h2>Pipeline</h2>
+    <ul>
+      <li>Внутри: разметчик → zip → ML-инженер → acmenra-ds → обучение</li>
+      <li>К заказчикам: docs.acmenra.studio, прямые продажи Acmenra, демо-гифка</li>
+      <li>Узкое место: один разметчик на проект, без ролей вдвоём не разметить</li>
+      <li>Перегрузка: датасет больше <span class="est">N картинок</span> на одной машине</li>
+      <li>Когнитивная нагрузка: 3 инструмента, горячие клавиши, 2 кнопки выгрузки</li>
+    </ul>
+  </section>
+
+  <section class="z sh">
+    <h2>Shared resources</h2>
+    <ul class="cols">
+      <li>Разработчики Acmenra: время делится между acmenra-cv/ds и заказными проектами</li>
+      <li>Разметчики: одни люди на датасетах разных заказчиков</li>
+      <li>Формат acmenra-ds правит Acmenra — их изменение ломает нашу выгрузку, приоритет у них</li>
+      <li>Команда spirit, 2 человека: время делится с учёбой</li>
+      <li class="act">При дефиците: Ultralytics или Roboflow + наша выгрузка в формате Ultralytics</li>
+    </ul>
+  </section>
+
+  <section class="z neg">
+    <h2>Negative by-products</h2>
+    <ul class="cols">
+      <li>Два формата повёрнутой рамки: файл не той стороне не загрузится — вопрос «чем отличаются кнопки» уже был</li>
+      <li>Нет проверки вторым человеком: ошибки разметки уходят прямо в обучение</li>
+      <li>Нет ролей и резервных копий: сбой диска — потеря разметки</li>
+      <li>Разметка монотонна, разметчики устают</li>
+      <li>Риск репутации Acmenra, если релиз Q4 2026 сдвинется</li>
+      <li class="act">Снизить: подсказка у кнопок выгрузки, проверка вторым человеком и бэкапы в версии 2</li>
+    </ul>
+  </section>
+
+</div>
+</body>
+</html>
